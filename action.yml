@@ -1,0 +1,31 @@
+name: "Xcode Create Simulator"
+description: "Creates an simulator specific version"
+inputs:
+  device:
+    description: "e.g. [iPhone 8, iPhone 11 Pro Max]"
+    required: true
+  runtime:
+    description: "Version specifier"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: List Runtimes
+      shell: bash
+      run: |
+        xcrun simctl list runtimes
+    - name: List Devices
+      shell: bash
+      run: |
+        xcrun simctl list devices
+    - name: Format
+      id: format
+      uses: actions/github-script@v6
+      with:
+        script: |
+          github.setOutput("device", "${{ input.device }}".replace(/\s/g, "-"))
+          github.setOutput("runtime", "${{ input.runtime }}".replace(/\./g, "-"))
+    - name: Create
+      shell: bash
+      run: xcrun simctl create SIM com.apple.CoreSimulator.SimDeviceType.${{ steps.format.outputs.device }} com.apple.CoreSimulator.SimRuntime.${{ steps.format.outputs.runtime }}
