@@ -28,4 +28,4 @@ runs:
           core.setOutput("runtime", "${{ inputs.runtime }}".replace(/\./g, "-"))
     - name: Create
       shell: bash
-      run: xcrun simctl create SIM com.apple.CoreSimulator.SimDeviceType.${{ steps.format.outputs.device }} com.apple.CoreSimulator.SimRuntime.${{ steps.format.outputs.runtime }}
+      run: xcrun simctl create SIM com.apple.CoreSimulator.SimDeviceType.${{ steps.format.outputs.device }} com.apple.CoreSimulator.SimRuntime.iOS-${{ steps.format.outputs.runtime }}
