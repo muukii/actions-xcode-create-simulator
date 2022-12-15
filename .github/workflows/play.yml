@@ -26,4 +26,4 @@ jobs:
         with:
           device: 'iPhone 8'
           runtime: ${{ matrix.ios_version }}
-      - run: echo ${{ steps.target.output.uuid }}
+      - run: echo ${{ steps.target.outputs.uuid }}
