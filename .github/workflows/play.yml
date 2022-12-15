@@ -22,6 +22,8 @@ jobs:
         with:
           ios_version: ${{ matrix.ios_version }}
       - uses: muukii/actions-xcode-create-simulator@main
+        id: target
         with:
           device: 'iPhone 8'
           runtime: ${{ matrix.ios_version }}
+      - run: echo ${{ steps.target.output.uuid }}
