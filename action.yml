@@ -8,6 +8,9 @@ inputs:
     description: "Version specifier"
     required: true
 
+outputs:
+  uuid:
+    value: ${{ steps.create.outputs.uuid }}
 runs:
   using: "composite"
   steps:
@@ -27,5 +30,8 @@ runs:
           core.setOutput("device", "${{ inputs.device }}".replace(/\s/g, "-"))
           core.setOutput("runtime", "${{ inputs.runtime }}".replace(/\./g, "-"))
     - name: Create
+      id: create
       shell: bash
-      run: xcrun simctl create SIM com.apple.CoreSimulator.SimDeviceType.${{ steps.format.outputs.device }} com.apple.CoreSimulator.SimRuntime.iOS-${{ steps.format.outputs.runtime }}
+      run: |
+        UUID=$(xcrun simctl create SIM com.apple.CoreSimulator.SimDeviceType.${{ steps.format.outputs.device }} com.apple.CoreSimulator.SimRuntime.iOS-${{ steps.format.outputs.runtime }})
+        echo "uuid=$UUID" >> $GITHUB_OUTPUT
