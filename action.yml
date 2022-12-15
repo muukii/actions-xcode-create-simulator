@@ -24,8 +24,8 @@ runs:
       uses: actions/github-script@v6
       with:
         script: |
-          github.setOutput("device", "${{ input.device }}".replace(/\s/g, "-"))
-          github.setOutput("runtime", "${{ input.runtime }}".replace(/\./g, "-"))
+          github.setOutput("device", "${{ inputs.device }}".replace(/\s/g, "-"))
+          github.setOutput("runtime", "${{ inputs.runtime }}".replace(/\./g, "-"))
     - name: Create
       shell: bash
       run: xcrun simctl create SIM com.apple.CoreSimulator.SimDeviceType.${{ steps.format.outputs.device }} com.apple.CoreSimulator.SimRuntime.${{ steps.format.outputs.runtime }}
